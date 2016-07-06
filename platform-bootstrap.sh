@@ -3,13 +3,13 @@
 yum install -y unzip
 
 mkdir -p /var/www
-mkdir -p /srv/pillar
+
 
 cd /tmp && rm -fr wsu-platform
 cd /tmp && curl -o wsu-platform.zip -L https://github.com/washingtonstateuniversity/WSUWP-Platform/archive/master.zip
 cd /tmp && unzip wsu-platform.zip
 cd /tmp && mv WSUWP-Platform-master wsu-platform
-cp -fr /tmp/wsu-platform/pillar /srv/pillar
+cp -fr /tmp/wsu-platform/pillar /srv/
 cp -fr /tmp/wsu-platform/www /var/www
 
 cd /tmp && rm -fr wsu-web
