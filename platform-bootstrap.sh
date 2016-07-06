@@ -27,8 +27,11 @@ ssh-keyscan -H 192.30.252.131 >> ~/.ssh/known_hosts
 ssh-keygen -R github.com
 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
+yum clean all
 yum -y install unzip
-yum install kernel-headers  --disableexcludes=all
+
+yum search kernel-headers  --disableexcludes=all
+yum -y install kernel-headers  --disableexcludes=all
 
 mkdir -p /var/www
 
