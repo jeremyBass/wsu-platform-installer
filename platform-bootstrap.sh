@@ -49,7 +49,8 @@ ssh-keyscan -H 192.30.252.131 >> ~/.ssh/known_hosts
 ssh-keygen -R github.com
 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
-yum install -y unzip
+yum  -y install unzip
+uname -r | grep -qi "xen" && yum -y install kernel-xen-devel || yum -y install kernel-devel
 
 mkdir -p /var/www
 
@@ -69,7 +70,7 @@ else
 fi
 
 gitploy init 2>&1 | grep -qi "already initialized" && echo ""
-gitploy ls 2>&1 | grep -qi "platform" && gitploy up platform
-gitploy ls 2>&1 | grep -qi "platform" && start || gitploy clone -b master platform https://github.com/jeremyBass/wsu-platform-parts.git && start
+gitploy ls 2>&1 | grep -qi "platform" && gitploy up platform && start
+gitploy ls 2>&1 | grep -qi "platform" || gitploy clone -b master platform https://github.com/jeremyBass/wsu-platform-parts.git && start
 
 
