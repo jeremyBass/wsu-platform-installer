@@ -71,6 +71,6 @@ fi
 
 gitploy init 2>&1 | grep -qi "already initialized" && echo ""
 gitploy ls 2>&1 | grep -qi "platform" && gitploy up platform && start
-gitploy ls 2>&1 | grep -qi "platform" || gitploy clone -b master platform https://github.com/jeremyBass/wsu-platform-parts.git && start
+gitploy ls 2>&1 | grep -qi "platform" || gitploy clone -b master platform git@github.com:jeremyBass/wsu-platform-parts.git && start
 
 
