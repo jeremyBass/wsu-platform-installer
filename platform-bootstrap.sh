@@ -59,7 +59,7 @@ cd /tmp && curl -o wsu-platform.zip -L https://github.com/washingtonstateunivers
 cd /tmp && unzip wsu-platform.zip
 cd /tmp && mv WSUWP-Platform-master wsu-platform
 cp -fr /tmp/wsu-platform/pillar /srv/
-cp -fr /tmp/wsu-platform/www /var/www
+cp -fr /tmp/wsu-platform/www /var/
 
 cd /
 if [ ! -h /usr/sbin/gitploy ]; then
