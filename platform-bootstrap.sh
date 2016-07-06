@@ -1,6 +1,6 @@
 #!/bin/bash
 
-yum -y install unzip
+yum install -y unzip
 
 mkdir -p /var/www
 mkdir -p /srv/pillar
