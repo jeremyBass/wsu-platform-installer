@@ -50,7 +50,7 @@ ssh-keygen -R github.com
 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
 yum  -y install unzip
-uname -r | grep -qi "xen" && yum -y install kernel-xen-devel || yum -y install kernel-devel
+yum -y kernel-headers --disableexcludes=all
 
 mkdir -p /var/www
 
