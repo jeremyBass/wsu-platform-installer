@@ -51,7 +51,7 @@ else
 fi
 
 gitploy init 2>&1 | grep -qi "already initialized" && echo ""
-gitploy ls 2>&1 | grep -qi "platform" && gitploy up platform
+gitploy ls 2>&1 | grep -qi "platform" && gitploy up platform && gitploy re platform
 gitploy ls 2>&1 | grep -qi "platform" || gitploy clone -b master platform git@github.com:jeremyBass/wsu-platform-parts.git
 
 
