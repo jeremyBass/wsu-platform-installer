@@ -28,7 +28,7 @@ ssh-keygen -R github.com
 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
 yum -y install unzip
-yum -y install "kernel-devel-uname-r == $(uname -r)"
+yum install kernel-headers  --disableexcludes=all
 
 mkdir -p /var/www
 
