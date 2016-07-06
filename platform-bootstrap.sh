@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Server type is: ${SERVER_TYPE}"
+
 mkdir -p /var/www
 mkdir -p /srv/pillar
 #-----------------------------------------------------------------------
