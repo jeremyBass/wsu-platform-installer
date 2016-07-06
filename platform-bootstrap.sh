@@ -1,5 +1,7 @@
 #!/bin/bash
 
+yum -y unzip
+
 mkdir -p /var/www
 mkdir -p /srv/pillar
 
