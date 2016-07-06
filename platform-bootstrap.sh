@@ -1,27 +1,5 @@
 #!/bin/bash
 
-#------
-# function: to set up the stuff but only after things are ok
-#-----------------------------------------------------
-start(){
-    cd /tmp && rm -fr wsu-web
-    cd /tmp && curl -o wsu-web.zip -L https://github.com/washingtonstateuniversity/wsu-web-provisioner/archive/master.zip
-    cd /tmp && unzip wsu-web.zip
-    cd /tmp && mv WSU-Web-Provisioner-master wsu-web
-    cp -fr /tmp/wsu-web/provision/salt /srv/
-    cp /tmp/wsu-web/provision/salt/config/local.yum.conf /etc/yum.conf
-    rpm -Uvh --force http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-    sed -i 's/mirrorlist=https/mirrorlist=http/' /etc/yum.repos.d/epel.repo
-    yum -y update python
-    sh /tmp/wsu-web/provision/bootstrap_salt.sh -K stable
-    rm /etc/salt/minion.d/*.conf
-    rm /etc/salt/minion_id
-    echo "wsuwp-prod" > /etc/salt/minion_id
-    cp /tmp/wsu-web/provision/salt/minions/wsuwp.conf /etc/salt/minion.d/
-    salt-call --local --log-level=info --config-dir=/etc/salt state.highstate
-}
-
-
 #-----------------------------------------------------------------------
 # Add the keys to the server so you can get to github safely without
 # need for a prompt which salt will not handle correctly
@@ -70,7 +48,22 @@ else
 fi
 
 gitploy init 2>&1 | grep -qi "already initialized" && echo ""
-gitploy ls 2>&1 | grep -qi "platform" && gitploy up platform && start
-gitploy ls 2>&1 | grep -qi "platform" || gitploy clone -b master platform git@github.com:jeremyBass/wsu-platform-parts.git && start
+gitploy ls 2>&1 | grep -qi "platform" && gitploy up platform
+gitploy ls 2>&1 | grep -qi "platform" || gitploy clone -b master platform git@github.com:jeremyBass/wsu-platform-parts.git
 
 
+    cd /tmp && rm -fr wsu-web
+    cd /tmp && curl -o wsu-web.zip -L https://github.com/washingtonstateuniversity/wsu-web-provisioner/archive/master.zip
+    cd /tmp && unzip wsu-web.zip
+    cd /tmp && mv WSU-Web-Provisioner-master wsu-web
+    cp -fr /tmp/wsu-web/provision/salt /srv/
+    cp /tmp/wsu-web/provision/salt/config/local.yum.conf /etc/yum.conf
+    rpm -Uvh --force http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    sed -i 's/mirrorlist=https/mirrorlist=http/' /etc/yum.repos.d/epel.repo
+    yum -y update python
+    sh /tmp/wsu-web/provision/bootstrap_salt.sh -K stable
+    rm /etc/salt/minion.d/*.conf
+    rm /etc/salt/minion_id
+    echo "wsuwp-prod" > /etc/salt/minion_id
+    cp /tmp/wsu-web/provision/salt/minions/wsuwp.conf /etc/salt/minion.d/
+    salt-call --local --log-level=info --config-dir=/etc/salt state.highstate
