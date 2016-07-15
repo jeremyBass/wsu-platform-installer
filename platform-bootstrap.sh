@@ -68,7 +68,14 @@ cd /tmp && mv WSU-Web-Provisioner-master wsu-web
 cp -fr /tmp/wsu-web/provision/salt /srv/
 cp /tmp/wsu-web/provision/salt/config/yum.conf /etc/yum.conf
 
+rpm -Uvh --force http://download.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+sed -i 's/mirrorlist=https/mirrorlist=http/' /etc/yum.repos.d/epel.repo
+yum -y update python
+
 sh /tmp/wsu-web/provision/bootstrap_salt.sh -K stable
-cp /tmp/wsu-web/provision/salt/minions/wsu-general.conf /etc/salt/minion.d/
+rm /etc/salt/minion.d/*.conf
+rm /etc/salt/minion_id
+echo "wsuwp-prod" > /etc/salt/minion_id
+cp /tmp/wsu-web/provision/salt/minions/wsuwp.conf /etc/salt/minion.d/
 
 salt-call --local --log-level=info --config-dir=/etc/salt state.highstate
