@@ -61,11 +61,6 @@ touch /srv/pillar/top.sls
 touch /srv/pillar/network.sls
 touch /srv/pillar/mysql.sls
 
-groupadd ucadmin
-useradd ucadmin -m -g ucadmin
-passwd ucadmin
-visudo
-
 cd /tmp && rm -fr wsu-web
 cd /tmp && curl -o wsu-web.zip -L https://github.com/washingtonstateuniversity/wsu-web-provisioner/archive/master.zip
 cd /tmp && unzip wsu-web.zip
