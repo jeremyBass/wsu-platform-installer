@@ -61,10 +61,12 @@ touch /srv/pillar/top.sls
 touch /srv/pillar/network.sls
 touch /srv/pillar/mysql.sls
 
-cd /tmp && rm -fr wsu-web
-cd /tmp && curl -o wsu-web.zip -L https://github.com/washingtonstateuniversity/wsu-web-provisioner/archive/master.zip
-cd /tmp && unzip wsu-web.zip
-cd /tmp && mv WSU-Web-Provisioner-master wsu-web
+[ -d /tmp/wsu-web ] || mkdir -p /tmp/wsu-web
+
+gitploy init 2>&1 | grep -qi "already initialized" && echo ""
+gitploy ls 2>&1 | grep -qi "wsu-web-provisioner" && gitploy up wsu_web_provisioner
+gitploy ls 2>&1 | grep -qi "wsu-web-provisioner" || gitploy add -p /tmp/wsu-web -b master wsu_web_provisioner https://github.com/washingtonstateuniversity/wsu-web-provisioner.git
+
 cp -fr /tmp/wsu-web/provision/salt /srv/
 cp /tmp/wsu-web/provision/salt/config/yum.conf /etc/yum.conf
 
